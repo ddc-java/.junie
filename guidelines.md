@@ -1,5 +1,9 @@
 # Guidelines
 
+## Build configuration
+
+When modifying content in response to a prompt from me, you **must not** modify the build configuration in any `build.gradle`, `build.gradle.kts`, `settings.gradle`, or `settings.gradle.kts` file, unless explicitly directed to do so. 
+
 ## Version control
 
 ### Automatic commits
