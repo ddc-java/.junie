@@ -50,15 +50,15 @@ Whenever your execution plan, in response to a prompt from me, requires **you** 
 
 When I prompt you to commit changes I have made:
 
-1. Check (via `git status`) for uncommitted changes.
+1. You **must** check for uncommitted changes.
 
-2. If there are uncommitted changes, `git add` and `git commit` them, using this format for the commit message (note the blank line separating the first line from the rest of the message and the **absence** of a `Prompt:` block):
+2. If there are uncommitted changes, you **must** `git add` and `git commit` them, using this format for the commit message (note the blank line separating the first line from the rest of the message and the **absence** of a `Prompt:` block):
 
     > Commit by Junie: {short summary}
     >
     > {long summary}
 
-    - Replace {short summary} with a generated abbreviated summary of the changes, limited so that the total length of the first line does not exceed 72 characters.
+    - Replace {short summary} with a generated abbreviated summary of the changes, limited so that the total length of the first line **does not** exceed 72 characters.
 
     - Replace {long summary} with a generated summary of the changes, without regard for line length or overall length. Separate multiple paragraphs by blank lines.
 
@@ -90,7 +90,7 @@ If `viewBinding` is enabled in `build.gradle.kts`, then:
 
 - After inflating the layout resource, the `onCreateView` method of all `Fragment` subclasses created by you **must** end with the statement `return binding.getRoot();`.
 
-- To avoid memory leaks, the `onDestroyView` method of all `Fragment` subclasses created by you **must** include the statement, `binding = null;`, before the invocation of `super.destroyView()`.
+- To avoid memory leaks, the `onDestroyView` method of all `Fragment` subclasses created by you **must** include the statement, `binding = null;`, before the invocation of `super.onDestroyView()`.
 
 ### Navigation
 
