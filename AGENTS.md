@@ -31,6 +31,11 @@ The following steps are **mandatory standing instructions** and must be executed
    - **Line 3+:** `{long summary}`
    - **Last Line:** `Prompt: {prompt}`
 
+#### Format Decision Rule (Mandatory)
+To choose the correct commit format, use this logic:
+- **Use "Automatic" format (`Change by Junie:`)** if YOU (the agent) modified, created, or deleted the files being committed, even if the user explicitly told you to "commit these changes."
+- **Use "Prompted" format (`Commit by Junie:`)** ONLY if the changes were already present in the working tree (made by the user or a previous process) and you are simply performing the `git commit` operation as requested.
+
 #### Prompted commits
 
 When prompted to commit changes made by me:
