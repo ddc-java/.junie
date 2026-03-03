@@ -7,15 +7,9 @@ This repository provides a mechanism for managing Junie's instructions across a 
 
 ## Overview
 
-When working in a project, Junie aggregates instructions from multiple `.junie/AGENTS.md` files:
+Junie automatically aggregates instructions from `.junie/AGENTS.md` files found in the project root and up to two parent directories. This hierarchy ensures that specialized project rules can override or extend broader organizational standards.
 
-1. The project-specific guidelines (`./.junie/AGENTS.md`).
- 
-2. The parent directory guidelines (`../.junie/AGENTS.md`).
-
-3. The grandparent directory guidelines (`../../.junie/AGENTS.md`).
-
-This hierarchy ensures that specialized project rules can override or extend broader organizational standards.
+Files deeper in the directory structure (closer to the project) take precedence over those higher up. This search is limited to **two steps** above the current project directory to ensure performance and prevent the accidental inclusion of unrelated system-level guidelines.
 
 ## Getting Started
 
@@ -33,25 +27,15 @@ If you don't have as deeply nested a structure as shown above&mdash;e.g., extend
 
 ### 2. Bootstrapping a Project
 
-To enable Junie to "look upward" for guidelines, you must include the bootstrap instructions at the top of your project's `.junie/AGENTS.md` file.
+To maintain consistency and clarify precedence for both Junie and other developers, every project's `.junie/AGENTS.md` should begin with the standard 3-line header found in `AGENTS.md.template`.
 
-1. Locate the `AGENTS.md.template` file in this repository.
+1. Copy the contents of `AGENTS.md.template`.
  
-2. Copy its contents.
- 
-3. Paste it at the very beginning of your project's `.junie/AGENTS.md`.
+2. Paste it at the very beginning of your project's `.junie/AGENTS.md`.
 
 ### 3. Usage and Conflict Resolution
 
-Junie handles conflicting rules (e.g., "Use tabs" in the root vs. "Use spaces" in the project) based on your current mode:
-
-*   **Brave Mode:** Junie automatically applies the precedence logic (deeper files override higher files).
-
-*   **Standard Mode:** Junie will detect the conflict and ask if you want to apply the standard precedence logic for the duration of the request or resolve the conflict manually.
-
-## Directory Search Limits
-
-The search for ancestor guidelines is limited to **two steps** above the current project directory to ensure performance and prevent the accidental inclusion of unrelated system-level guidelines.
+The system defaults to **Brave Mode**, meaning Junie will automatically resolve conflicts using the "deepest wins" precedence logic without pausing for confirmation.
 
 ## Best Practices
 
