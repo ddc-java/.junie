@@ -48,7 +48,7 @@ Whenever your execution plan, in response to a prompt from me, requires **you** 
 
 #### Prompted commits
 
-When I prompt you to commit (e.g., "Please commit my changes"):
+When I prompt you to commit changes I have made:
 
 1. Check (via `git status`) for uncommitted changes.
 
@@ -80,7 +80,7 @@ If the Hilt plugin is included in the `plugins` configuration block of `build.gr
 
 - All `Activity` and `Fragment` subclasses created by you **must** include the `@AndroidEntryPoint` annotation.
 
-- All viewmodel classes created by you **must** be subclasses of `ViewModel` (_not_ `AndroidViewModel`), must be annotated with the `@HiltViewModel` annotation, and must have a constructor annotated with `@Inject`.
+- All viewmodel classes created by you **must** be subclasses of `ViewModel` (_not_ `AndroidViewModel`), **must** be annotated with the `@HiltViewModel` annotation, and **must** have a constructor annotated with `@Inject`.
 
 ### View binding
 
@@ -102,4 +102,4 @@ When creating or modifying navigation resources, in Android projects or subproje
 
 - Any `<action>` elements that you create **must** have an `android:id` attribute value of the form `@+id/navigate_to_{destination_class_name}`, where `{destination_class_name}` is replaced with the `lower_snake_case` form of the destination fragment subclass name.
 
-- When _modifying_ an existing `<fragment>` or `<action>` element, do not modify the `android:id` attribute value, _even if it violates the above guidelines_, unless I explicitly ask you to do so in the prompt.
+- When _modifying_ an existing `<fragment>` or `<action>` element, **do not** modify the `android:id` attribute value, _even if it violates the above guidelines_, unless I explicitly ask you to do so in the prompt.
