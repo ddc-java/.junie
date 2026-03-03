@@ -62,11 +62,9 @@ When I prompt you to commit changes I have made:
 
     - Replace {long summary} with a generated summary of the changes, without regard for line length or overall length. Separate multiple paragraphs by blank lines.
 
-    This section applies regardless of who made the changes or when they were made. If there are no uncommitted changes, then this item may be skipped.
+    This section applies regardless of the origin of the changes and when they were made. If there are no uncommitted changes, then this item may be skipped.
 
 ## Android projects
-
-For Android projects, check the `build.gradle.kts` script in the Android-specific Gradle subprojects (e.g., `app`):
 
 ### Build configuration
 
@@ -98,7 +96,7 @@ If `viewBinding` is enabled in `build.gradle.kts`, then:
 
 When creating or modifying navigation resources, in Android projects or subprojects where the navigation safeargs plugin is applied:
 
-- All `<fragment>` elements that you create **must** use the lower_snake_case form of the fragment subclass name (including the "Fragment" suffix, if present in the class name) for the `android:id` attribute---that is, `@+id/{fragment_class_name}`, where `{fragment_class_name}` is replaced with the `lower_snake_case` form of the fragment subclass name.
+- All `<fragment>` elements that you create **must** use the `lower_snake_case` form of the fragment subclass name (including the "Fragment" suffix, if present in the class name) for the `android:id` attribute---that is, `@+id/{fragment_class_name}`, where `{fragment_class_name}` is replaced with the `lower_snake_case` form of the fragment subclass name.
 
 - Any `<action>` elements that you create **must** have an `android:id` attribute value of the form `@+id/navigate_to_{destination_class_name}`, where `{destination_class_name}` is replaced with the `lower_snake_case` form of the destination fragment subclass name.
 
