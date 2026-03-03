@@ -1,12 +1,16 @@
 # Guidelines
 
-## Build configuration
+## General
+
+### Build configuration, warnings, and errors
 
 When modifying content in response to a prompt from me, you **must not** modify the build configuration in any `build.gradle`, `build.gradle.kts`, `settings.gradle`, or `settings.gradle.kts` file, unless explicitly directed to do so. 
 
-## Version control
+Build warnings **must not** be treated as errors. When a build task fails (i.e., terminates with a non-zero exit code), you **must** report the error messages before the warning messages; otherwise, you **must not** report a build that completes successfully (i.e., with a result code of zero) as having failed simply due to build warnings.
 
-### Automatic commits
+### Version control
+
+#### Automatic commits
 
 Whenever your execution plan, in response to a prompt from me, requires **you** to perform file creation, modification, or deletion, you must do the following (do not follow these steps if the execution plan consists only of read-only operations or if the only file changes are those already present in the workspace before you begin):
 
@@ -42,7 +46,7 @@ Whenever your execution plan, in response to a prompt from me, requires **you** 
 
 **Important:** Use this format ONLY for commits that are part of your automated execution plan. If the user explicitly asks you to commit, use the **Prompted commits** format below.
 
-### Prompted commits
+#### Prompted commits
 
 When I prompt you to commit (e.g., "Please commit my changes"):
 
@@ -64,28 +68,38 @@ When I prompt you to commit (e.g., "Please commit my changes"):
 
 For Android projects, check the `build.gradle.kts` script in the Android-specific Gradle subprojects (e.g., `app`):
 
+### Build configuration
+
+Build warnings **must not** be treated as errors. When a build task fails (i.e., terminates with a non-zero exit code), you **must** report the error messages before the warning messages. Gradle warnings are quite common in Android development (especially the "deprecated Gradle features used" warning), and while you **must** report them to me, you **must not** report a build that completes successfully (i.e., with a result code of zero) as having failed simply due to build warnings.
+
 ### Dependency injection
 
-If the Hilt plugin is included in the `plugins` configuration block, then all `Application` subclasses created by you must include the `@HiltAndroidApp` annotation; all `Activity` and `Fragment` subclasses created by you must include the `@AndroidEntryPoint` annotation; all viewmodel classes created by you must be subclasses of `ViewModel` (_not_ `AndroidViewModel`), must be annotated with the `@HiltViewModel` annotation, and must have a constructor annotated with `@Inject`.
+If the Hilt plugin is included in the `plugins` configuration block of `build.gradle.kts`, then:
+
+- All `Application` subclasses created by you **must** include the `@HiltAndroidApp` annotation.
+
+- All `Activity` and `Fragment` subclasses created by you **must** include the `@AndroidEntryPoint` annotation.
+
+- All viewmodel classes created by you **must** be subclasses of `ViewModel` (_not_ `AndroidViewModel`), must be annotated with the `@HiltViewModel` annotation, and must have a constructor annotated with `@Inject`.
 
 ### View binding
 
-If `viewBinding` is enabled, then:
+If `viewBinding` is enabled in `build.gradle.kts`, then:
 
-- All `Activity` and `Fragment` subclasses created by you must use the `inflate` method of the viewbinding class associated with the layout resource, and assign the result to a `private` field named `binding`, of the viewbinding class type.
+- All `Activity` and `Fragment` subclasses created by you **must** use the `inflate` method of the viewbinding class associated with the layout resource, and assign the result to a `private` field named `binding`, of the viewbinding class type.
 
-- After inflating the layout resource, the `onCreate` method of all `Activity` subclasses created by you must include the statement `setContentView(binding.getRoot());`.
+- After inflating the layout resource, the `onCreate` method of all `Activity` subclasses created by you **must** include the statement `setContentView(binding.getRoot());`.
 
-- After inflating the layout resource, the `onCreateView` method of all `Fragment` subclasses created by you must end with the statement `return binding.getRoot();`.
+- After inflating the layout resource, the `onCreateView` method of all `Fragment` subclasses created by you **must** end with the statement `return binding.getRoot();`.
 
-- To avoid memory leaks, the `onDestroyView` method of all `Fragment` subclasses created by you must include the statement `binding = null;`.
+- To avoid memory leaks, the `onDestroyView` method of all `Fragment` subclasses created by you **must** include the statement, `binding = null;`, before the invocation of `super.destroyView()`.
 
 ### Navigation
 
 When creating or modifying navigation resources, in Android projects or subprojects where the navigation safeargs plugin is applied:
 
-- All `<fragment>` elements that you create must use the lower_snake_case form of the fragment subclass name (including the "Fragment" suffix, if present in the class name) for the `android:id` attribute---that is, `@+id/{fragment_class_name}`, where `{fragment_class_name}` is replaced with the `lower_snake_case` form of the fragment subclass name.
+- All `<fragment>` elements that you create **must** use the lower_snake_case form of the fragment subclass name (including the "Fragment" suffix, if present in the class name) for the `android:id` attribute---that is, `@+id/{fragment_class_name}`, where `{fragment_class_name}` is replaced with the `lower_snake_case` form of the fragment subclass name.
 
-- Any `<action>` elements that you create must have an `android:id` attribute value of the form `@+id/navigate_to_{destination_class_name}`, where `{destination_class_name}` is replaced with the `lower_snake_case` form of the destination fragment subclass name.
+- Any `<action>` elements that you create **must** have an `android:id` attribute value of the form `@+id/navigate_to_{destination_class_name}`, where `{destination_class_name}` is replaced with the `lower_snake_case` form of the destination fragment subclass name.
 
 - When _modifying_ an existing `<fragment>` or `<action>` element, do not modify the `android:id` attribute value, _even if it violates the above guidelines_, unless I explicitly ask you to do so in the prompt.
