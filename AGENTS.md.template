@@ -1,3 +1,19 @@
 # Project Guidelines
 
-Default to **Brave Mode**: Guidelines in this file (`./.junie/AGENTS.md`) take highest precedence, followed by the immediate parent (`../.junie/AGENTS.md`), then the grandparent (`../../.junie/AGENTS.md`).
+## Discovery & Precedence (Mandatory)
+
+The following discovery and aggregation process is a **mandatory standing instruction** for all tasks. You must perform these steps before proposing an execution plan or modifying any files:
+
+1.  **Locate Guidelines:** Search for and read `.junie/AGENTS.md` in the following locations:
+    -   `./.junie/AGENTS.md` (Current Project Root)
+    -   `../.junie/AGENTS.md` (Parent Directory)
+    -   `../../.junie/AGENTS.md` (Grandparent Directory)
+
+2.  **Aggregate Rules:** Combine the instructions from all discovered files into a single set of active guidelines for the session.
+
+3.  **Apply Precedence:** In the event of a conflict or overlapping rule, apply the following order of precedence (highest to lowest):
+    -   **Level 1 (Highest):** `./.junie/AGENTS.md` (Project-specific rules)
+    -   **Level 2:** `../.junie/AGENTS.md` (Parent rules)
+    -   **Level 3 (Lowest):** `../../.junie/AGENTS.md` (Grandparent rules)
+
+4.  **Persistent Application:** These aggregated rules apply to **all operations**, including build configurations, code style, dependency injection, and version control (Git).
