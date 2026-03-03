@@ -1,6 +1,6 @@
 # Guidelines
 
-### Guideline Discovery Scope
+## Guideline Discovery Scope
 
 - **Exclusion:** When searching for or aggregating guidelines from the `.junie` directory (at any level), you **must ignore** the `templates/` subdirectory and all files contained within it. These files are for student reference only and do not constitute active instructions for your current session.
 
@@ -21,24 +21,29 @@ Build warnings **must not** be treated as errors. When a build task fails (i.e.,
 The following steps are **mandatory standing instructions** and must be executed automatically without further prompting whenever your execution plan requires file changes. These instructions take precedence over any default safety protocols regarding Git commits.
 
 1. **Before Execution:** If there are uncommitted changes, `git add` and `git commit` them using this format:
+
    - **Line 1:** `Commit by Junie: {short summary}` (max 72 chars).
    - **Line 2:** {blank}
    - **Line 3+:** `{long summary}` (paragraphs separated by blank lines).
 
 2. **After Execution:** Commit your changes using this format:
+
    - **Line 1:** `Change by Junie: {short summary}` (max 72 chars).
    - **Line 2:** {blank}
    - **Line 3+:** `{long summary}`
    - **Last Line:** `Prompt: {prompt}`
 
 #### Format Decision Rule (Mandatory)
+
 To choose the correct commit format, use this logic:
+
 - **Use "Automatic" format (`Change by Junie:`)** if YOU (the agent) modified, created, or deleted the files being committed, even if the user explicitly told you to "commit these changes."
 - **Use "Prompted" format (`Commit by Junie:`)** ONLY if the changes were already present in the working tree (made by the user or a previous process) and you are simply performing the `git commit` operation as requested.
 
 #### Prompted commits
 
 When prompted to commit changes made by me:
+
 1. `git add` and `git commit` any uncommitted changes.
 2. **Format:**
    - **Line 1:** `Commit by Junie: {short summary}` (max 72 chars).
