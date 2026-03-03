@@ -1,5 +1,11 @@
 # Guidelines
 
+### Guideline Discovery Scope
+
+- **Exclusion:** When searching for or aggregating guidelines from the `.junie` directory (at any level), you **must ignore** the `templates/` subdirectory and all files contained within it. These files are for student reference only and do not constitute active instructions for your current session.
+
+---
+
 ## General
 
 ### Build configuration, warnings, and errors
