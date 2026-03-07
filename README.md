@@ -1,49 +1,73 @@
 ---
 ignore: true
 ---
-# Cascading Guidelines for Junie
+
+## Cascading Junie Guidelines
+
+### Summary
 
 This repository provides a mechanism for managing Junie's instructions across a hierarchical directory structure using a cascading approach. This allows for global, team-level, and project-specific rules to coexist with clear precedence.
 
-## Overview
+### Bootstrapping the Guideline Hierarchy
 
-Junie automatically aggregates instructions from `.junie/AGENTS.md` files found in the project root and up to two parent directories. This hierarchy ensures that specialized project rules can override or extend broader organizational standards.
+By default, Junie (the AI agent) only looks at the immediate project root for instructions. To enable the **Team** and **Global** guideline levels, you must "kick-start" her discovery process at the beginning of every new chat session.
 
-Files deeper in the directory structure (closer to the project) take precedence over those higher up. This search is limited to **two steps** above the current project directory to ensure performance and prevent the accidental inclusion of unrelated system-level guidelines.
+#### 1. The Setup
 
-## Getting Started
+Ensure your project structure follows this pattern:
 
-### 1. Repository Structure
+* **Global Level (3)** 
 
-To implement this system, organize your projects in a nested structure. For example:
-- `org-root/` (Organizational standards)
-  - `.junie/AGENTS.md`
-  - `team-alpha/` (Team-specific standards)
-    - `.junie/AGENTS.md`
-    - `project-x/` (Project-specific standards)
-      - `.junie/AGENTS.md`
+    -`../../.junie/AGENTS.md`
 
-If you don't have as deeply nested a structure as shown above&mdash;e.g., extending only one level closer to the root than the current project&mdash;that's fine: Junie will still find the parent guidelines.
+* **Team Level (2)**
 
-### 2. Bootstrapping a Project
+    -`../.junie/AGENTS.md`
 
-To maintain consistency and clarify precedence for both Junie and other developers, every project's `.junie/AGENTS.md` should begin with the standard 3-line header found in `AGENTS.md.template`.
+* **Project Level (1)** 
 
-1. Copy the contents of `AGENTS.md.template`.
- 
-2. Paste it at the very beginning of your project's `.junie/AGENTS.md`.
+    - `./.junie/`
+        - `AGENTS.md`
+        - `PROCEDURES.md`
+        - `PROJECT.md`
 
-### 3. Usage and Conflict Resolution
+(Even if either the **Global** level or the team **Team** level is absent, the other will still be found and used.)
 
-The system defaults to **Brave Mode**, meaning Junie will automatically resolve conflicts using the "deepest wins" precedence logic without pausing for confirmation.
+The project-level files can be copied from the `templates` directory of this repository. `AGENTS.md` and `PROCEDURES.md` should not be modified; `PROJECT.md` should be used for guidelines that add to or override the team- and global-level guidelines.
 
-## Best Practices
+#### 2. Initialization Prompts
 
-- **Granularity:** Keep root-level guidelines broad (e.g., license headers, general naming conventions).
+This simple prompt, at the start of a new IntelliJ session (or a new chat within an ongoing session), will usually serve to establish the strict boundaries of the cascading guidelines structure, while minimizing the risk of Junie getting caught up in a mutually recursive loop of guidelines references.
 
-- **Specificity:** Use project-level guidelines for technical specifics (e.g., library versions, specific architectural patterns).
+> Summarize your guidelines, and tell me all of the files from which you read them.
 
-- **Clarity:** When overriding a rule, explicitly state that it supersedes the parent rule to help Junie identify the intent.
+Use the prompt below if you want to be a little more strict. For example, if Junie gets stuck on the above prompt, use the stop button in the bottom-right corner of the prompt window, and try this one:
+
+> Please initialize the session by following the **Discovery & Precedence** instructions in `./.junie/PROCEDURES.md`. State exactly which files were read, the order in which they were aggregated, and confirm that no recursive directory scans (like `ls -R`) were performed. Once finished, list the active precedence levels found.
+
+#### 3. Recovery prompt
+
+Finally, if after working fine for a while, Junie seems to get locked up while reading an `AGENTS.md` file, or after executing an `ls -R` command (for example), use this prompt (after stopping Junie's processing on the previous prompt) to reset the guidelines:
+
+> Please bypass the HALT condition in `PROCEDURES.md` for this single request and reload all guidelines. State exactly which files were read, the order in which they were aggregated, and confirm that no recursive directory scans (like ls -R) were performed. Once finished, list the active precedence levels found.
+
+#### 4. Why This Is Necessary
+
+* **Awareness:** Junie does not natively "walk up" the directory tree to find parent guidelines. This prompt forces her to look at the Team and Global tiers.
+
+* **Efficiency:** The `PROCEDURES.md` file contains "Literal Path" instructions that prevent Junie from locking up during long file-system searches (especially in multi-subproject Gradle environments).
+
+* **Precedence:** This ensures that project-specific rules (Level 1) correctly override team and global standards (Levels 2 and 3) if there is a conflict.
+
+#### 5. Verifying Success
+
+Junie should respond with a list similar to this:
+
+1. `./.junie/AGENTS.md` (Level 1) - **Found**
+2. `../.junie/AGENTS.md` (Level 2) - **Found**
+3. `../../.junie/AGENTS.md` (Level 3) - **Found**
+
+(As noted above, the absence of either the level 2 or level 3 guidelines won't prevent Junie from using the guidelines from the other, along with the level 1 guidelines.)
 
 ---
 
