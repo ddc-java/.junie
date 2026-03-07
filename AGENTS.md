@@ -33,8 +33,8 @@ The following steps are mandatory whenever your execution plan requires you to m
    - **Line 1:** `Change by Junie: {short summary}` (max 72 chars).
    - **Line 2:** {blank}
    - **Line 3+:** `{long summary}`
-   - **Line _n - 1_:** {blank}
-   - **Line _n_:** `Prompt: {prompt}`
+   - **Next Line:** {blank}
+   - **Following Line:** `Prompt: {prompt}`
 
 - **Prompted (`Commit by Junie:`):** Use this when prompted by me to commit changes already present in the working tree (and as required by the **Mandatory Automatic Execution** rules).
 
